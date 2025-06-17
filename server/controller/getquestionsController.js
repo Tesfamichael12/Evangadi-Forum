@@ -6,7 +6,7 @@ const dbconnection = require("../db/db.Config");
  */
 async function getquestions(req, res) {
   try {
-    const userId = req.user?.userid; 
+    const userId = req.user?.userid;
     // Pagination params
     const page = parseInt(req.query.page, 10) || 1;
     const pageSize = parseInt(req.query.pageSize, 10) || 10;
@@ -19,7 +19,7 @@ async function getquestions(req, res) {
     }
     // Search
     const search = req.query.search ? req.query.search.trim() : null;
-    
+
     let whereClause = "";
     let queryParams = [];
     let paramIndex = 1;
@@ -28,13 +28,20 @@ async function getquestions(req, res) {
     queryParams.push(userId || 0); // $1 for ul.user_id
 
     if (search) {
-      whereClause = `WHERE (q.tag ILIKE $${paramIndex + 1} OR q.question_title ILIKE $${paramIndex + 2} OR q.question_description ILIKE $${paramIndex + 3})`;
+      whereClause = `WHERE (q.tag ILIKE $${
+        paramIndex + 1
+      } OR q.question_title ILIKE $${
+        paramIndex + 2
+      } OR q.question_description ILIKE $${paramIndex + 3})`;
       const likeSearch = `%${search}%`;
       queryParams.push(likeSearch, likeSearch, likeSearch);
       paramIndex += 3;
     }
 
-    const countQuery = `SELECT COUNT(*) as total FROM question q ${whereClause.replace(/\$\d+/g, (match, i) => search ? `$` + (parseInt(match.substring(1)) -1) : match )}`;
+    const countQuery = `SELECT COUNT(*) as total FROM question q ${whereClause.replace(
+      /\$\d+/g,
+      (match, i) => (search ? `$` + (parseInt(match.substring(1)) - 1) : match)
+    )}`;
     // Adjust countQueryParams by removing the first element (userId for user_vote_type) if it's not part of the WHERE for count
     const countQueryParams = search ? queryParams.slice(1, 1 + 3) : [];
     const countResult = await dbconnection.query(countQuery, countQueryParams);
@@ -73,8 +80,11 @@ async function getquestions(req, res) {
     `;
     queryParams.push(pageSize, offset);
 
-    const questionsResult = await dbconnection.query(questionsQuery, queryParams);
-    
+    const questionsResult = await dbconnection.query(
+      questionsQuery,
+      queryParams
+    );
+
     res.status(StatusCodes.OK).json({
       questions: questionsResult.rows,
       pagination: {
@@ -98,7 +108,7 @@ async function getquestions(req, res) {
 async function getSingleQuestion(req, res) {
   try {
     const { id } = req.params;
-    const userId = req.user?.userid; 
+    const userId = req.user?.userid;
 
     const queryParams = [userId || 0, id];
 

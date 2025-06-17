@@ -81,7 +81,11 @@ async function register(req, res) {
   } catch (error) {
     console.error("Error during registration:", error);
     // Check for unique constraint violation specifically for user_email (added in tables.js for PostgreSQL)
-    if (error.code === '23505' && error.constraint === 'registration_user_email_key') { // Default constraint name for UNIQUE
+    if (
+      error.code === "23505" &&
+      error.constraint === "registration_user_email_key"
+    ) {
+      // Default constraint name for UNIQUE
       return res.status(StatusCodes.CONFLICT).json({
         error: "Conflict",
         message: "Email address is already registered.",

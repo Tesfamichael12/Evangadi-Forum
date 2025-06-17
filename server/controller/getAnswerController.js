@@ -68,8 +68,13 @@ async function getAnswers(req, res) {
       ORDER BY ${orderBy} -- orderBy is sanitized
       LIMIT $3 OFFSET $4;
     `;
-    
-    const results = await dbconnection.query(query, [userId || null, question_id, pageSize, offset]);
+
+    const results = await dbconnection.query(query, [
+      userId || null,
+      question_id,
+      pageSize,
+      offset,
+    ]);
 
     // If the question exists but has no answers (total > 0 but results.rows.length === 0 after pagination)
     // This check might be redundant if the initial total check handles it,

@@ -17,7 +17,9 @@ if (connectionString) {
   console.log("Connecting to PostgreSQL using DATABASE_URL with SSL.");
 } else {
   // Fallback to individual environment variables (for local or other setups)
-  console.log("DATABASE_URL not found, attempting connection with individual DB variables.");
+  console.log(
+    "DATABASE_URL not found, attempting connection with individual DB variables."
+  );
   dbconnection = new Pool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -26,20 +28,26 @@ if (connectionString) {
     port: parseInt(process.env.DB_PORT) || 5432, // Default PostgreSQL port
     connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT) || 10, // Though Pool manages this differently, it's good to have
   });
-  console.log(`Connecting to PostgreSQL host: ${process.env.DB_HOST} on port: ${parseInt(process.env.DB_PORT) || 5432}`);
+  console.log(
+    `Connecting to PostgreSQL host: ${process.env.DB_HOST} on port: ${
+      parseInt(process.env.DB_PORT) || 5432
+    }`
+  );
 }
 
 // Test the connection
-dbconnection.query('SELECT NOW()', (err, res) => {
+dbconnection.query("SELECT NOW()", (err, res) => {
   if (err) {
-    console.error('Error connecting to PostgreSQL or executing test query:', err.stack);
+    console.error(
+      "Error connecting to PostgreSQL or executing test query:",
+      err.stack
+    );
   } else {
-    console.log('Successfully connected to PostgreSQL. Test query result:', res.rows[0]);
+    console.log(
+      "Successfully connected to PostgreSQL. Test query result:",
+      res.rows[0]
+    );
   }
 });
 
 module.exports = dbconnection;
-
-
-
-

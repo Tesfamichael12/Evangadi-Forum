@@ -54,7 +54,9 @@ async function initDB(req, res) {
 
     if (userExistsResult.rowCount === 0) {
       // Use a parameterized query for the password
-      await client.query(`CREATE USER ${newDbUser} WITH PASSWORD $1`, [newDbPassword]); // User name cannot be parameterized
+      await client.query(`CREATE USER ${newDbUser} WITH PASSWORD $1`, [
+        newDbPassword,
+      ]); // User name cannot be parameterized
       console.log(`User ${newDbUser} created.`);
     } else {
       console.log(`User ${newDbUser} already exists.`);
@@ -67,25 +69,44 @@ async function initDB(req, res) {
     // Note: Must be connected to the *newly created database* to grant schema-level privileges effectively,
     // or grant connect and then grant schema privileges.
     // For simplicity here, granting all on the database.
-    await client.query(`GRANT ALL PRIVILEGES ON DATABASE ${newDbName} TO ${newDbUser}`);
-    console.log(`All privileges on database ${newDbName} granted to ${newDbUser}.`);
-    
+    await client.query(
+      `GRANT ALL PRIVILEGES ON DATABASE ${newDbName} TO ${newDbUser}`
+    );
+    console.log(
+      `All privileges on database ${newDbName} granted to ${newDbUser}.`
+    );
+
     // If you need to grant usage on schema or specific table privileges, you'd connect to the newDbName
     // and then issue those GRANT commands. E.g., GRANT USAGE ON SCHEMA public TO newDbUser;
     // GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO newDbUser;
 
-    res.send("Database and user setup for PostgreSQL completed (or already existed).");
+    res.send(
+      "Database and user setup for PostgreSQL completed (or already existed)."
+    );
   } catch (err) {
     console.error("Error initializing PostgreSQL database/user:", err);
     // Check for specific PostgreSQL error codes if needed
-    if (err.code === '42P04') { // duplicate_database
-        res.status(409).send(`Database ${newDbName} already exists. ${err.message}`);
-    } else if (err.code === '42710') { // duplicate_object (for role)
-        res.status(409).send(`User/Role ${newDbUser} already exists. ${err.message}`);
-    } else if (err.code === '28P01') { // invalid_password (authentication failure for adminPool)
-        res.status(401).send(`Authentication failed for admin user. Check PGADMIN credentials. ${err.message}`);
+    if (err.code === "42P04") {
+      // duplicate_database
+      res
+        .status(409)
+        .send(`Database ${newDbName} already exists. ${err.message}`);
+    } else if (err.code === "42710") {
+      // duplicate_object (for role)
+      res
+        .status(409)
+        .send(`User/Role ${newDbUser} already exists. ${err.message}`);
+    } else if (err.code === "28P01") {
+      // invalid_password (authentication failure for adminPool)
+      res
+        .status(401)
+        .send(
+          `Authentication failed for admin user. Check PGADMIN credentials. ${err.message}`
+        );
     } else {
-        res.status(500).send("Error initializing PostgreSQL database/user: " + err.message);
+      res
+        .status(500)
+        .send("Error initializing PostgreSQL database/user: " + err.message);
     }
   } finally {
     if (client) {
@@ -98,8 +119,3 @@ async function initDB(req, res) {
 }
 
 module.exports = { initDB };
-
-
-
-
-

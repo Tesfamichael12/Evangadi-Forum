@@ -26,7 +26,10 @@ async function login(req, res) {
     if (userResult.rows.length === 0) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ error: "Unauthorized", message: "User not found, please register first" });
+        .json({
+          error: "Unauthorized",
+          message: "User not found, please register first",
+        });
     }
 
     const user = userResult.rows[0];

@@ -13,12 +13,12 @@ async function handleVote(req, res, type, isLikeBoolean) {
     // Assuming a unique constraint named e.g., unique_user_question_vote on (user_id, question_id)
     // Or, specify columns directly: ON CONFLICT (user_id, question_id)
     // For the provided tables.js, the constraint is unique_vote_question (user_id, question_id, is_like)
-    // This makes simple upsert to change vote type tricky. 
+    // This makes simple upsert to change vote type tricky.
     // A better unique constraint for this logic would be (user_id, question_id)
     // Let's assume the unique constraint is effectively on (user_id, typeIdColumn)
     // for the purpose of ON CONFLICT DO UPDATE to change the is_like value.
     // If the unique constraint is (user_id, typeIdColumn, is_like), then ON CONFLICT (user_id, typeIdColumn, is_like) DO NOTHING
-    // would prevent duplicates but not allow changing a vote. 
+    // would prevent duplicates but not allow changing a vote.
     // To allow changing vote, the constraint should be (user_id, typeIdColumn).
     // We will proceed as if the constraint is (user_id, typeIdColumn) for upserting is_like.
   } else if (type === "answer") {
@@ -41,12 +41,12 @@ async function handleVote(req, res, type, isLikeBoolean) {
       ON CONFLICT (user_id, ${typeIdColumn}) 
       DO UPDATE SET is_like = $3, created_at = CURRENT_TIMESTAMP;
     `;
-    // Note: If your unique constraint in tables.js is indeed (user_id, question_id, is_like) and 
-    // (user_id, answer_id, is_like), then the above ON CONFLICT (user_id, ${typeIdColumn}) 
-    // will FAIL if such a constraint doesn't exist. 
+    // Note: If your unique constraint in tables.js is indeed (user_id, question_id, is_like) and
+    // (user_id, answer_id, is_like), then the above ON CONFLICT (user_id, ${typeIdColumn})
+    // will FAIL if such a constraint doesn't exist.
     // You would need a unique constraint specifically on (user_id, ${typeIdColumn}).
-    // If you must use the existing unique constraints (user_id, typeIdColumn, is_like), 
-    // then handling vote changes (e.g., like to dislike) requires deleting the old record 
+    // If you must use the existing unique constraints (user_id, typeIdColumn, is_like),
+    // then handling vote changes (e.g., like to dislike) requires deleting the old record
     // and inserting a new one, or a more complex MERGE statement if available/appropriate.
     // For simplicity, this code assumes a unique constraint on (user_id, ${typeIdColumn}) exists or is desired.
 
@@ -67,16 +67,24 @@ async function handleVote(req, res, type, isLikeBoolean) {
       dislikes: parseInt(countsResult.rows[0]?.dislikes, 10) || 0,
     });
   } catch (err) {
-    console.error(`Error while voting on ${type} (ID: ${id}, UserID: ${userId}):`, err);
+    console.error(
+      `Error while voting on ${type} (ID: ${id}, UserID: ${userId}):`,
+      err
+    );
     // Check for specific PostgreSQL error codes if helpful
     // e.g., 23503 for foreign key violation if question_id/answer_id/user_id does not exist
     // e.g., 23505 for unique constraint violation if ON CONFLICT is not set up as expected or another constraint fails
-    if (err.code === '23503') {
-        return res.status(StatusCodes.NOT_FOUND).json({ message: `The specified ${type} or user does not exist.` });
+    if (err.code === "23503") {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: `The specified ${type} or user does not exist.` });
     }
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Database error occurred while voting.", error: err.message });
+      .json({
+        message: "Database error occurred while voting.",
+        error: err.message,
+      });
   }
 }
 

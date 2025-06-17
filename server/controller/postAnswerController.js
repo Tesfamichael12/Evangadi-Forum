@@ -103,14 +103,15 @@ async function postAnswer(req, res) {
       message: error.message,
       stack: error.stack,
       code: error.code, // PostgreSQL error code
-      constraint: error.constraint // Violated constraint name, if any
+      constraint: error.constraint, // Violated constraint name, if any
     });
 
-    if (error.code === '23503') { // Foreign key violation
+    if (error.code === "23503") {
+      // Foreign key violation
       let detail = "Invalid user_id or question_id.";
-      if (error.constraint && error.constraint.includes('user_id')) {
+      if (error.constraint && error.constraint.includes("user_id")) {
         detail = "Posting user does not exist.";
-      } else if (error.constraint && error.constraint.includes('question_id')) {
+      } else if (error.constraint && error.constraint.includes("question_id")) {
         detail = "The question this answer refers to does not exist.";
       }
       return res.status(StatusCodes.BAD_REQUEST).json({

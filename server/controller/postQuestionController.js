@@ -84,24 +84,26 @@ async function postQuestion(req, res) {
     res.status(StatusCodes.CREATED).json({
       message: "Question posted successfully",
       questionId: result.rows[0].question_id, // Get the returned question_id
-      postId: postId 
+      postId: postId,
     });
   } catch (error) {
     console.error("Error posting question:", error);
     // Handle potential foreign key violation if userId does not exist in registration table
-    if (error.code === '23503') { // Foreign key violation error code in PostgreSQL
-        return res.status(StatusCodes.BAD_REQUEST).json({
-            error: "Bad Request",
-            message: "Invalid user ID. User does not exist."
-        });
+    if (error.code === "23503") {
+      // Foreign key violation error code in PostgreSQL
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        error: "Bad Request",
+        message: "Invalid user ID. User does not exist.",
+      });
     }
     // Handle potential unique constraint violation for post_id (though less likely with random generation)
-    if (error.code === '23505' && error.constraint === 'question_post_id_key') {
-        // This indicates a collision with post_id, ideally retry with a new post_id or use a sequence
-        return res.status(StatusCodes.CONFLICT).json({
-            error: "Conflict",
-            message: "Failed to generate a unique post identifier. Please try again."
-        });
+    if (error.code === "23505" && error.constraint === "question_post_id_key") {
+      // This indicates a collision with post_id, ideally retry with a new post_id or use a sequence
+      return res.status(StatusCodes.CONFLICT).json({
+        error: "Conflict",
+        message:
+          "Failed to generate a unique post identifier. Please try again.",
+      });
     }
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: "Internal Server Error",
