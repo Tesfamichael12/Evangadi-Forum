@@ -15,7 +15,7 @@ app.use(
     origin: [
       "http://localhost:4321",
       "http://localhost:5173",
-      "https://evangadi-forum-beta7.vercel.app/",
+      "https://evangadi-forum-beta7.vercel.app", // Removed trailing slash
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],

@@ -370,7 +370,7 @@ function QuestionDetailAndAnswer() {
                 {loading ? (
                   <>
                     <ClipLoader color={"#fff"} loading={loading} size={20} />
-                    <span style={{ marginLeft: '10px' }}>Posting . . .</span>
+                    <span style={{ marginLeft: "10px" }}>Posting . . .</span>
                   </>
                 ) : (
                   "Post Your Answer"
