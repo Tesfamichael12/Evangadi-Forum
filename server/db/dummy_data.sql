@@ -31,20 +31,21 @@ INSERT INTO registration (user_name, user_email, password) VALUES
 ('dawit', 'dawit.tefera@example.com', '$2b$10$placeholderhash'),
 ('elias', 'elias.negash@example.com', '$2b$10$placeholderhash');
 
--- PROFILES (Assuming user_id is auto-incremented starting from 1)
+-- PROFILES (Assuming user_id is auto-incremented starting from 1 and corresponds to registration table)
+-- For PostgreSQL, SERIAL columns start at 1 by default, so this should align if data is inserted in order.
 INSERT INTO profile (user_id, first_name, last_name) VALUES
-(1, 'Abebe', 'Bekele'),
-(2, 'Alem', 'Tesfaye'),
-(3, 'Biruk', 'Gebre'),
-(4, 'Chaltu', 'Abera'),
-(5, 'Daniel', 'Mekonnen'),
-(6, 'Eden', 'Habtamu'),
-(7, 'Fikadu', 'Tamiru'),
-(8, 'Genet', 'Ayalew'),
-(9, 'Hanna', 'Assefa'),
-(10, 'Ibrahim', 'Ali'),
-(11, 'Yordanos', 'Tsegaye'),
-(12, 'Kebede', 'Wolde'),
+(1, 'Eden', 'Teklezghi'),
+(2, 'Abdulhakim', 'Sefa'),
+(3, 'EKRAM', 'ABDU'),
+(4, 'Eyale', 'Kerie'),
+(5, 'Fozia', 'Hussein'),
+(6, 'Ketemaw', 'Asmare'),
+(7, 'Mihret', 'Bizuayehu'),
+(8, 'Seid', 'Mohammed'),
+(9, 'SIMON', 'GHEBREMEDHIN'),
+(10, 'Tesfamichael', 'Tafere'),
+(11, 'Tewodros', 'Gebretsadkan'),
+(12, 'Yilak', 'Muluneh'),
 (13, 'Leila', 'Hassan'),
 (14, 'Meron', 'Desta'),
 (15, 'Nahom', 'Solomon'),
@@ -65,6 +66,7 @@ INSERT INTO profile (user_id, first_name, last_name) VALUES
 (30, 'Elias', 'Negash');
 
 -- QUESTIONS (Assuming user_id is 1-30, post_id is unique integer)
+-- These should be fine as is, assuming user_id and post_id are correct integers.
 INSERT INTO question (question_title, question_description, tag, user_id, post_id) VALUES
 ('How do I center a div in CSS?', 'I am struggling to center a div horizontally and vertically. What is the best way to do this in modern CSS?', 'css', 1, 1001),
 ('What is the difference between let, var, and const in JavaScript?', 'Can someone explain the difference between let, var, and const with examples?', 'javascript', 2, 1002),
@@ -89,19 +91,19 @@ INSERT INTO question (question_title, question_description, tag, user_id, post_i
 ('How to set up a CI/CD pipeline with GitHub Actions?', 'Guide on automating build, test, and deployment using GitHub Actions.', 'devops', 21, 1021),
 ('What are common web security vulnerabilities?', 'Discuss XSS, CSRF, SQL Injection, and how to prevent them.', 'security', 22, 1022),
 ('Learning resources for machine learning in Amharic?', 'Are there any ML courses or tutorials available in Amharic?', 'machine-learning', 23, 1023),
-('How to contribute to open source projects?', 'A beginner\'s guide to finding projects, making contributions, and submitting pull requests.', 'community', 24, 1024),
-('Understanding Big O notation for algorithm analysis.', 'Explain how Big O notation is used to describe algorithm efficiency with examples.', 'algorithms', 25, 1025),
+('How to contribute to open source projects?', 'A beginner''s guide to finding projects, making contributions, and submitting pull requests.', 'community', 24, 1024),
+('Understanding Big O notation for algorithm analysis.', 'Explain how Big O describes the upper bound of an algorithm''s runtime or space complexity as input size grows. O(n) is linear, O(1) is constant.', 'algorithms', 25, 1025),
 ('Best practices for writing clean and maintainable code?', 'What principles like DRY, KISS, SOLID should developers follow?', 'best-practices', 26, 1026),
 ('How to use Git for version control effectively?', 'Tips on branching strategies, commit messages, and resolving merge conflicts.', 'git', 27, 1027),
 ('What are Progressive Web Apps (PWAs)?', 'Explain the features and benefits of PWAs and how to build them.', 'webdev', 28, 1028),
 ('Introduction to cloud computing platforms (AWS, Azure, GCP).', 'Overview of services offered by major cloud providers and their use cases.', 'cloud', 29, 1029),
 ('How to prepare for technical interviews in software engineering?', 'Advice on data structures, algorithms, system design, and behavioral questions for interviews.', 'career', 30, 1030);
 
--- ANSWERS (Assuming question_id refers to the auto-incremented PK of the question table, 1-30)
+-- ANSWERS (Assuming question_id refers to the PK of the question table, 1-30)
+-- These should be fine as is, assuming user_id and question_id are correct integers.
 INSERT INTO answer (answer, user_id, question_id) VALUES
 ('You can center a div using flexbox: display: flex; justify-content: center; align-items: center;', 2, 1),
 ('let and const are block scoped, var is function scoped. Use const for constants, let for variables that change.', 3, 2),
-('Use the mysql2 package: npm install mysql2. Then use createConnection or createPool.', 4, 3),
 ('useEffect lets you run side effects in React components, like fetching data or updating the DOM.', 5, 4),
 ('Use bcrypt to hash passwords: npm install bcrypt. Never store plain text passwords.', 6, 5),
 ('Check out Evangadi Networks and Ethiopian developer groups on Telegram and Facebook.', 7, 6),
@@ -123,10 +125,45 @@ INSERT INTO answer (answer, user_id, question_id) VALUES
 ('Sanitize inputs to prevent XSS/SQLi, use CSRF tokens, and keep dependencies updated.', 23, 22),
 ('While direct Amharic resources are growing, many English tutorials have Amharic-speaking communities around them. Check YouTube and local tech groups.', 24, 23),
 ('Look for "good first issue" tags on GitHub. Read contribution guidelines, fork the repo, create a branch, and submit a PR with clear descriptions.', 25, 24),
-('Big O describes the upper bound of an algorithm\'s runtime or space complexity as input size grows. O(n) is linear, O(1) is constant.', 26, 25),
-('DRY: Don\'t Repeat Yourself. KISS: Keep It Simple, Stupid. SOLID principles help create maintainable object-oriented designs.', 27, 26),
+('Big O describes the upper bound of an algorithm''s runtime or space complexity as input size grows. O(n) is linear, O(1) is constant.', 26, 25),
+('DRY: Don''t Repeat Yourself. KISS: Keep It Simple, Stupid. SOLID principles help create maintainable object-oriented designs.', 27, 26),
 ('Use feature branches, write descriptive commit messages (e.g., "feat: add user login"), and rebase or merge carefully.', 28, 27),
 ('PWAs offer native-app-like experiences (offline support, push notifications) in the browser. Use service workers and a manifest file.', 29, 28),
 ('AWS, Azure, and GCP offer compute, storage, database, and ML services. Choose based on project needs and existing ecosystem.', 30, 29),
 ('Practice coding problems on LeetCode/HackerRank, review system design concepts, and prepare stories for behavioral questions.', 1, 30);
+
+
+INSERT INTO likes_dislikes (user_id, question_id, is_like) VALUES
+(1, 1, true),    -- User 1 likes Question 1
+(2, 1, true),    -- User 2 likes Question 1
+(3, 1, false),   -- User 3 dislikes Question 1
+(1, 2, true),    -- User 1 likes Question 2
+(4, 2, true),    -- User 4 likes Question 2
+(5, 2, false),   -- User 5 dislikes Question 2
+(6, 3, true),    -- User 6 likes Question 3
+(7, 3, true),    -- User 7 likes Question 3
+(8, 3, false),   -- User 8 dislikes Question 3
+(9, 4, true),    -- User 9 likes Question 4
+(10, 5, false),  -- User 10 dislikes Question 5
+(11, 5, true),   -- User 11 likes Question 5
+(1, 10, true),   -- User 1 likes Question 10 (JWT)
+(2, 10, false),  -- User 2 dislikes Question 10 (JWT)
+(15, 20, true);  -- User 15 likes Question 20 (GraphQL)
+
+INSERT INTO likes_dislikes (user_id, answer_id, is_like) VALUES
+(4, 1, true),    -- User 4 likes Answer 1 (belongs to Q1)
+(5, 1, false),   -- User 5 dislikes Answer 1 (belongs to Q1)
+(1, 2, true),    -- User 1 likes Answer 2 (belongs to Q2)
+(2, 3, true),    -- User 2 likes Answer 3 (belongs to Q3)
+(3, 3, false),   -- User 3 dislikes Answer 3 (belongs to Q3)
+(4, 4, true),    -- User 4 likes Answer 4 (belongs to Q4)
+(6, 5, true),    -- User 6 likes Answer 5 (belongs to Q5)
+(7, 6, false),   -- User 7 dislikes Answer 6 (belongs to Q6)
+(8, 7, true),    -- User 8 likes Answer 7 (belongs to Q7)
+(10, 10, true),  -- User 10 likes Answer 10 (belongs to Q10)
+(12, 11, false), -- User 12 dislikes Answer 11 (belongs to Q11)
+(14, 13, true),  -- User 14 likes Answer 13 (belongs to Q13)
+(16, 15, false), -- User 16 dislikes Answer 15 (belongs to Q15)
+(18, 17, true),  -- User 18 likes Answer 17 (belongs to Q17)
+(20, 19, true);  -- User 20 likes Answer 19 (belongs to Q19)
 

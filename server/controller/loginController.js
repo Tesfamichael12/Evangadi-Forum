@@ -18,29 +18,29 @@ async function login(req, res) {
   }
 
   try {
-    const [user] = await dbConnection.query(
-      "SELECT r.user_name, r.user_id, r.user_email, r.password, p.first_name FROM registration r JOIN profile p ON r.user_id = p.user_id WHERE r.user_email = ?",
+    const userResult = await dbConnection.query(
+      "SELECT r.user_name, r.user_id, r.user_email, r.password, p.first_name FROM registration r JOIN profile p ON r.user_id = p.user_id WHERE r.user_email = $1",
       [email]
     );
 
-    if (user.length === 0) {
+    if (userResult.rows.length === 0) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ message: "User not found, please register first" });
+        .json({ error: "Unauthorized", message: "User not found, please register first" });
     }
 
-    const rows = user[0];
+    const user = userResult.rows[0];
 
-    const isPasswordValid = await bcrypt.compare(password, rows.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ message: "Invalid password" });
+        .json({ error: "Unauthorized", message: "Invalid email or password" }); // Generic message for security
     }
 
-    const userid = rows.user_id;
-    const username = rows.user_name;
-    const first_name = rows.first_name; // Get first_name from the query result
+    const userid = user.user_id;
+    const username = user.user_name;
+    const first_name = user.first_name; // Get first_name from the query result
 
     const token = jwt.sign({ userid, username }, process.env.JWT_SECRET, {
       expiresIn: "30d",
@@ -48,17 +48,17 @@ async function login(req, res) {
 
     res.status(StatusCodes.OK).json({
       message: "User login successful",
-      userid: rows.user_id,
-      username: rows.user_name,
-      email: rows.user_email,
+      userid: user.user_id,
+      username: user.user_name,
+      email: user.user_email,
       first_name, // Add first_name to the response
       token,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error during login:", error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: "Internal Server Error",
-      message: "An unexpected error occurred.",
+      message: "An unexpected error occurred during login.",
     });
   }
 }

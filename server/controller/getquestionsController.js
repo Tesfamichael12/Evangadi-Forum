@@ -6,7 +6,7 @@ const dbconnection = require("../db/db.Config");
  */
 async function getquestions(req, res) {
   try {
-    const userId = req.user?.userid;
+    const userId = req.user?.userid; 
     // Pagination params
     const page = parseInt(req.query.page, 10) || 1;
     const pageSize = parseInt(req.query.pageSize, 10) || 10;
@@ -15,21 +15,31 @@ async function getquestions(req, res) {
     const sort = req.query.sort === "popular" ? "popular" : "recent";
     let orderBy = "q.created_at DESC";
     if (sort === "popular") {
-      orderBy = "likes DESC, q.created_at DESC";
+      orderBy = "likes DESC, q.created_at DESC"; // Ensure likes is defined in the SELECT if used here
     }
     // Search
     const search = req.query.search ? req.query.search.trim() : null;
+    
     let whereClause = "";
-    let params = [userId || 0];
+    let queryParams = [];
+    let paramIndex = 1;
+
+    // User vote subquery parameter
+    queryParams.push(userId || 0); // $1 for ul.user_id
+
     if (search) {
-      whereClause = `WHERE (q.tag LIKE ? OR q.question_title LIKE ? OR q.question_description LIKE ?)`;
+      whereClause = `WHERE (q.tag ILIKE $${paramIndex + 1} OR q.question_title ILIKE $${paramIndex + 2} OR q.question_description ILIKE $${paramIndex + 3})`;
       const likeSearch = `%${search}%`;
-      params.push(likeSearch, likeSearch, likeSearch);
+      queryParams.push(likeSearch, likeSearch, likeSearch);
+      paramIndex += 3;
     }
-    // Get total count for pagination
-    const countQuery = `SELECT COUNT(*) as total FROM question q ${whereClause}`;
-    const [[{ total }]] = await dbconnection.query(countQuery, params.slice(1));
-    // Fetch paginated questions
+
+    const countQuery = `SELECT COUNT(*) as total FROM question q ${whereClause.replace(/\$\d+/g, (match, i) => search ? `$` + (parseInt(match.substring(1)) -1) : match )}`;
+    // Adjust countQueryParams by removing the first element (userId for user_vote_type) if it's not part of the WHERE for count
+    const countQueryParams = search ? queryParams.slice(1, 1 + 3) : [];
+    const countResult = await dbconnection.query(countQuery, countQueryParams);
+    const total = parseInt(countResult.rows[0].total, 10);
+
     const questionsQuery = `
       SELECT
         q.*,
@@ -37,8 +47,8 @@ async function getquestions(req, res) {
         COALESCE(ld.likes, 0) AS likes,
         COALESCE(ld.dislikes, 0) AS dislikes,
         CASE
-          WHEN ul.is_like = 1 THEN 'up'
-          WHEN ul.is_like = 0 THEN 'down'
+          WHEN ul.is_like = TRUE THEN 'up'
+          WHEN ul.is_like = FALSE THEN 'down'
           ELSE NULL
         END AS user_vote_type
       FROM
@@ -48,23 +58,25 @@ async function getquestions(req, res) {
       LEFT JOIN (
         SELECT
           question_id,
-          SUM(CASE WHEN is_like = 1 THEN 1 ELSE 0 END) AS likes,
-          SUM(CASE WHEN is_like = 0 THEN 1 ELSE 0 END) AS dislikes
+          SUM(CASE WHEN is_like = TRUE THEN 1 ELSE 0 END) AS likes,
+          SUM(CASE WHEN is_like = FALSE THEN 1 ELSE 0 END) AS dislikes
         FROM
           likes_dislikes
         GROUP BY
           question_id
       ) AS ld ON q.question_id = ld.question_id
-      LEFT JOIN likes_dislikes ul ON ul.question_id = q.question_id AND ul.user_id = ?
-      ${whereClause}
+      LEFT JOIN likes_dislikes ul ON ul.question_id = q.question_id AND ul.user_id = $1 -- Param for user specific vote
+      ${whereClause} -- WHERE clause with $2, $3, $4 if search is active
       ORDER BY
-        ${orderBy}
-      LIMIT ? OFFSET ?;
+        ${orderBy} -- Safe as it's constructed from controlled inputs
+      LIMIT $${paramIndex + 1} OFFSET $${paramIndex + 2};
     `;
-    params.push(pageSize, offset);
-    const [questions] = await dbconnection.query(questionsQuery, params);
+    queryParams.push(pageSize, offset);
+
+    const questionsResult = await dbconnection.query(questionsQuery, queryParams);
+    
     res.status(StatusCodes.OK).json({
-      questions,
+      questions: questionsResult.rows,
       pagination: {
         total,
         page,
@@ -73,7 +85,7 @@ async function getquestions(req, res) {
       },
     });
   } catch (error) {
-    console.error("Error retrieving questions:", error.message);
+    console.error("Error retrieving questions:", error.message, error.stack);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Error retrieving questions" });
@@ -86,8 +98,11 @@ async function getquestions(req, res) {
 async function getSingleQuestion(req, res) {
   try {
     const { id } = req.params;
-    const userId = req.user?.userid;
-    const [questions] = await dbconnection.query(
+    const userId = req.user?.userid; 
+
+    const queryParams = [userId || 0, id];
+
+    const questionResult = await dbconnection.query(
       `
       SELECT
         q.*,
@@ -95,8 +110,8 @@ async function getSingleQuestion(req, res) {
         COALESCE(ld.likes, 0) AS likes,
         COALESCE(ld.dislikes, 0) AS dislikes,
         CASE
-          WHEN ul.is_like = 1 THEN 'up'
-          WHEN ul.is_like = 0 THEN 'down'
+          WHEN ul.is_like = TRUE THEN 'up'
+          WHEN ul.is_like = FALSE THEN 'down'
           ELSE NULL
         END AS user_vote_type
       FROM
@@ -106,24 +121,25 @@ async function getSingleQuestion(req, res) {
       LEFT JOIN (
         SELECT
           question_id,
-          SUM(CASE WHEN is_like = 1 THEN 1 ELSE 0 END) AS likes,
-          SUM(CASE WHEN is_like = 0 THEN 1 ELSE 0 END) AS dislikes
+          SUM(CASE WHEN is_like = TRUE THEN 1 ELSE 0 END) AS likes,
+          SUM(CASE WHEN is_like = FALSE THEN 1 ELSE 0 END) AS dislikes
         FROM
           likes_dislikes
         GROUP BY
           question_id
       ) AS ld ON q.question_id = ld.question_id
-      LEFT JOIN likes_dislikes ul ON ul.question_id = q.question_id AND ul.user_id = ?
-      WHERE q.question_id = ?
+      LEFT JOIN likes_dislikes ul ON ul.question_id = q.question_id AND ul.user_id = $1
+      WHERE q.question_id = $2
     `,
-      [userId || 0, id]
+      queryParams
     );
-    if (questions.length === 0) {
+
+    if (questionResult.rows.length === 0) {
       return res
         .status(StatusCodes.NOT_FOUND)
         .json({ message: "Question not found" });
     }
-    res.status(StatusCodes.OK).json({ question: questions[0] });
+    res.status(StatusCodes.OK).json({ question: questionResult.rows[0] });
   } catch (error) {
     console.error(
       `Error retrieving question with id ${req.params.id}:`,

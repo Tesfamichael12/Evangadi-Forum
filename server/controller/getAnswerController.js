@@ -12,17 +12,30 @@ async function getAnswers(req, res) {
   const sort = req.query.sort === "popular" ? "popular" : "recent";
   let orderBy = "a.created_at DESC";
   if (sort === "popular") {
-    orderBy = "likes DESC, a.created_at DESC";
+    orderBy = "likes DESC, a.created_at DESC"; // Ensure 'likes' alias is available or use the aggregate directly
   }
   try {
     // Get total count for pagination
-    const [[{ total }]] = await dbconnection.query(
-      `SELECT COUNT(*) as total FROM answer WHERE question_id = ?`,
+    const totalResult = await dbconnection.query(
+      `SELECT COUNT(*) as total FROM answer WHERE question_id = $1`,
       [question_id]
     );
+    const total = parseInt(totalResult.rows[0].total, 10);
 
-    const [results] = await dbconnection.query(
-      `
+    if (total === 0) {
+      return res.status(StatusCodes.OK).json({
+        answers: [],
+        pagination: { total: 0, page, pageSize, totalPages: 1 },
+      });
+    }
+
+    // Main query to fetch answers
+    // Note: The orderBy clause is constructed from validated input, which is acceptable.
+    // For user_vote_type, ensure likes_dislikes.is_like is boolean in PostgreSQL (true/false)
+    // or adjust the CASE statement accordingly if it's integer (1/0).
+    // Assuming is_like is BOOLEAN: CASE WHEN ul.is_like THEN 'up' WHEN NOT ul.is_like THEN 'down' ELSE NULL END
+    // If is_like is INTEGER (0 or 1): CASE WHEN ul.is_like = 1 THEN 'up' WHEN ul.is_like = 0 THEN 'down' ELSE NULL END
+    const query = `
       SELECT 
         a.answer_id,
         a.answer,
@@ -33,40 +46,35 @@ async function getAnswers(req, res) {
         COALESCE(ld.likes, 0) AS likes,
         COALESCE(ld.dislikes, 0) AS dislikes,
         CASE
-          WHEN ul.is_like = 1 THEN 'up'
-          WHEN ul.is_like = 0 THEN 'down'
+          WHEN ul.is_like = TRUE THEN 'up'  -- Assuming is_like is BOOLEAN
+          WHEN ul.is_like = FALSE THEN 'down' -- Assuming is_like is BOOLEAN
           ELSE NULL
         END AS user_vote_type
-      FROM question q
-      LEFT JOIN answer a ON q.question_id = a.question_id
+      FROM answer a -- Start from answer table as we are fetching answers
       LEFT JOIN registration r ON a.user_id = r.user_id
       LEFT JOIN profile p ON a.user_id = p.user_id
       LEFT JOIN (
         SELECT
           answer_id,
-          SUM(CASE WHEN is_like = 1 THEN 1 ELSE 0 END) AS likes,
-          SUM(CASE WHEN is_like = 0 THEN 1 ELSE 0 END) AS dislikes
+          SUM(CASE WHEN is_like = TRUE THEN 1 ELSE 0 END) AS likes, -- Assuming is_like is BOOLEAN
+          SUM(CASE WHEN is_like = FALSE THEN 1 ELSE 0 END) AS dislikes -- Assuming is_like is BOOLEAN
         FROM
           likes_dislikes
         GROUP BY
           answer_id
       ) AS ld ON a.answer_id = ld.answer_id
-      LEFT JOIN likes_dislikes ul ON ul.answer_id = a.answer_id AND ul.user_id = ?
-      WHERE q.question_id = ?
-      ORDER BY ${orderBy}
-      LIMIT ? OFFSET ?;
-    `,
-      [userId || 0, question_id, pageSize, offset]
-    );
+      LEFT JOIN likes_dislikes ul ON ul.answer_id = a.answer_id AND ul.user_id = $1
+      WHERE a.question_id = $2 -- Filter answers for the given question_id
+      ORDER BY ${orderBy} -- orderBy is sanitized
+      LIMIT $3 OFFSET $4;
+    `;
+    
+    const results = await dbconnection.query(query, [userId || null, question_id, pageSize, offset]);
 
-    if (total === 0) {
-      return res.status(StatusCodes.OK).json({
-        answers: [],
-        pagination: { total: 0, page, pageSize, totalPages: 1 },
-      });
-    }
-    // If the question exists but has no answers
-    if (results.length === 0 || results[0].answer_id === null) {
+    // If the question exists but has no answers (total > 0 but results.rows.length === 0 after pagination)
+    // This check might be redundant if the initial total check handles it,
+    // but it's good for clarity if somehow results are empty despite total > 0 (e.g., page out of bounds, though offset handles this)
+    if (results.rows.length === 0) {
       return res.status(StatusCodes.OK).json({
         answers: [],
         pagination: {
@@ -77,8 +85,9 @@ async function getAnswers(req, res) {
         },
       });
     }
+
     res.status(StatusCodes.OK).json({
-      answers: results,
+      answers: results.rows,
       pagination: {
         total,
         page,
