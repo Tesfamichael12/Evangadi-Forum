@@ -118,6 +118,14 @@ textarea {
   background-color: var(--accent);
 }
 
+.loading_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px; /* Adjust as needed */
+  width: 100%;
+}
+
 .success__msg {
   max-width: 600px;
   margin: 40px auto;

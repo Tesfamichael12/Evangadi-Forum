@@ -8,6 +8,7 @@ import { UserContext } from "../../Components/Context";
 import getTimeDifference from "../../Utility/helpers";
 import VoteButtons from "../../Components/VoteButtons/VoteButtons";
 import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners"; // Import ClipLoader
 
 function QuestionDetailAndAnswer() {
   const { userData, setUserData } = useContext(UserContext);
@@ -17,13 +18,14 @@ function QuestionDetailAndAnswer() {
 
   const [answer, setAnswer] = useState({
     user_id: userData?.userid,
-
     question_id,
     answer: "",
   });
 
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [loadingAnswers, setLoadingAnswers] = useState(false); // New state for loading answers
+  const [loadingQuestionDetail, setLoadingQuestionDetail] = useState(false); // New state for loading question detail
   const [error, setError] = useState({
     getAnswerError: null,
     getQuestionDetailError: null,
@@ -46,7 +48,7 @@ function QuestionDetailAndAnswer() {
   const submitAnswer = (e) => {
     console.log(answer);
     e.preventDefault();
-    setLoading(true);
+    setLoading(true); // This loading is for the submit button
     setError({
       ...error,
       postAnswerError: null,
@@ -120,7 +122,7 @@ function QuestionDetailAndAnswer() {
   };
 
   const getAllAnswers = () => {
-    setLoading(true);
+    setLoadingAnswers(true); // Use dedicated loading state for answers
     setError({
       ...error,
       getAnswerError: null,
@@ -163,12 +165,12 @@ function QuestionDetailAndAnswer() {
         setAnswerPagination({ total: 0, page: 1, pageSize: 5, totalPages: 1 });
       })
       .finally(() => {
-        setLoading(false);
+        setLoadingAnswers(false); // Clear dedicated loading state for answers
       });
   };
 
   const getQuestionDetail = () => {
-    setLoading(true);
+    setLoadingQuestionDetail(true); // Use dedicated loading state for question detail
     setError({
       ...error,
       getQuestionDetailError: null,
@@ -189,7 +191,7 @@ function QuestionDetailAndAnswer() {
         setError((prev) => ({ ...prev, getQuestionDetailError: errorMessage }));
       })
       .finally(() => {
-        setLoading(false);
+        setLoadingQuestionDetail(false); // Clear dedicated loading state for question detail
       });
   };
 
@@ -203,7 +205,15 @@ function QuestionDetailAndAnswer() {
       <div className={styles.outer__container}>
         <div className={styles.theQuestion}>
           <h3 className={styles.title}>Question</h3>
-          {questionDetail ? (
+          {loadingQuestionDetail ? (
+            <div className={styles.loading_container}>
+              <ClipLoader
+                color={"var(--primary)"}
+                loading={loadingQuestionDetail}
+                size={50}
+              />
+            </div>
+          ) : questionDetail ? (
             <>
               <p className={styles.Qtitle}>{questionDetail.question_title}</p>
               <p>{questionDetail.question_description}</p>
@@ -247,7 +257,15 @@ function QuestionDetailAndAnswer() {
           </div>
           <hr />
           <div className={styles.answers_container}>
-            {error.getAnswerError ? (
+            {loadingAnswers ? (
+              <div className={styles.loading_container}>
+                <ClipLoader
+                  color={"var(--primary)"}
+                  loading={loadingAnswers}
+                  size={50}
+                />
+              </div>
+            ) : error.getAnswerError ? (
               <p>{error?.getAnswerError}</p>
             ) : answersForQuestion.length === 0 ? (
               <p>No answers yet. Be the first to answer!</p>
@@ -328,28 +346,35 @@ function QuestionDetailAndAnswer() {
         </div>
 
         <div className={styles.answer__box}>
-          <h3 className={styles.title}>Answer the Top Question</h3>
-          <Link to="/home">Go to Question page</Link>
-          <form onSubmit={submitAnswer} className={styles.answerform}>
-            <textarea
-              name="answer"
-              id="answer"
-              placeholder="Your answer here"
-              onChange={handleChange}
-              value={successAnswer ? "" : answer.answer}
-              required
-            ></textarea>
-            {error?.postAnswerError && (
-              <p className={styles.error}>{error.postAnswerError}</p>
-            )}
-            <button
-              type="submit"
-              className={styles.answerBtn}
-              disabled={!userData || !token}
-            >
-              Post your Answer
-            </button>
-          </form>
+          <div className={styles.answer_form_container}>
+            <h3 className={styles.title}>Answer the Question</h3>
+            <form onSubmit={submitAnswer} className={styles.answer_form}>
+              <textarea
+                name="answer"
+                id="answer"
+                cols="30"
+                rows="5"
+                placeholder="Write your answer here..."
+                onChange={handleChange}
+                value={answer.answer}
+                required
+              ></textarea>
+              {error.postAnswerError && (
+                <p className={styles.error}>{error.postAnswerError}</p>
+              )}
+              <button
+                type="submit"
+                className={styles.answerBtn} // Corrected class name
+                disabled={loading} // This loading is for the submit button
+              >
+                {loading ? (
+                  <ClipLoader color={"#fff"} loading={loading} size={20} />
+                ) : (
+                  "Post Your Answer"
+                )}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </LayOut>

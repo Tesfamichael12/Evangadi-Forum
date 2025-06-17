@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext } from "react";
 import styles from "./askQuestions.module.css";
 import axios from "../../Utility/axios";
@@ -6,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import LayOut from "../../Components/Layout/Layout";
 import { UserContext } from "../../Components/Context";
 import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners"; // Import ClipLoader
 
 function AskQuestions() {
   const { userData, setUserData, loadingAuth } = useContext(UserContext);
@@ -34,7 +34,7 @@ function AskQuestions() {
       setQuestion((prev) => ({ ...prev, userId: userData.userid }));
     }
   }, [userData?.userid]);
- const [response, setResponse] = useState(null);
+  const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -85,13 +85,21 @@ function AskQuestions() {
       return;
     }
 
+    // Log the question data before sending
+    console.log("Submitting question:", question);
+
     try {
       await axios.post("/questions", question, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-    });
-      setQuestion({ title: "", description: "", tag: "", userId: userData.userid });
+      });
+      setQuestion({
+        title: "",
+        description: "",
+        tag: "",
+        userId: userData.userid,
+      });
       toast.success("Question posted successfully!", {
         position: "top-right",
         autoClose: 3000,
@@ -101,6 +109,20 @@ function AskQuestions() {
       if (error.response?.status === 401) {
         setError("Please login to ask a question");
         navigate("/landing");
+      } else if (
+        error.response?.status === 400 &&
+        error.response?.data?.message === "Tag must be 20 characters or less"
+      ) {
+        setError(
+          "Tag is too long. Please use a tag with 20 characters or less."
+        );
+        toast.error(
+          "Tag is too long. Please use a tag with 20 characters or less.",
+          {
+            position: "top-right",
+            autoClose: 3000,
+          }
+        );
       } else {
         setError("Failed to submit question. Please try again.");
         toast.error("Failed to submit question.", {
@@ -158,12 +180,12 @@ function AskQuestions() {
               value={question.tag}
             />
             {error && <p className={styles.error}>{error}</p>}
-            <button
-              type="submit"
-              className={styles.askBtn}
-              disabled={loading}
-            >
-              {loading ? "Posting..." : "Post Your Question"}
+            <button type="submit" className={styles.askBtn} disabled={loading}>
+              {loading ? (
+                <ClipLoader color={"#fff"} loading={loading} size={20} />
+              ) : (
+                "Post Your Question"
+              )}
             </button>
           </form>
         </div>
