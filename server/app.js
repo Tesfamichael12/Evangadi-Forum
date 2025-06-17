@@ -12,7 +12,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:4321", "http://localhost:5173"],
+    origin: [
+      "http://localhost:4321",
+      "http://localhost:5173",
+      "https://evangadi-forum-beta7.vercel.app/",
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],

@@ -368,7 +368,10 @@ function QuestionDetailAndAnswer() {
                 disabled={loading} // This loading is for the submit button
               >
                 {loading ? (
-                  <ClipLoader color={"#fff"} loading={loading} size={20} />
+                  <>
+                    <ClipLoader color={"#fff"} loading={loading} size={20} />
+                    <span style={{ marginLeft: '10px' }}>Posting . . .</span>
+                  </>
                 ) : (
                   "Post Your Answer"
                 )}

@@ -182,7 +182,10 @@ function AskQuestions() {
             {error && <p className={styles.error}>{error}</p>}
             <button type="submit" className={styles.askBtn} disabled={loading}>
               {loading ? (
-                <ClipLoader color={"#fff"} loading={loading} size={20} />
+                <>
+                  <ClipLoader color={"#fff"} loading={loading} size={20} />
+                  <span style={{ marginLeft: '10px' }}>Posting . . .</span>
+                </>
               ) : (
                 "Post Your Question"
               )}
