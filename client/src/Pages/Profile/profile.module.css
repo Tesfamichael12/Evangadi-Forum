@@ -1,0 +1,205 @@
+/* --- Main Container & Card --- */
+.profileContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  background-color: #f0f2f5;
+  padding: 2rem;
+}
+
+.profileCard {
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 0.4rem 2rem rgba(0, 0, 0, 0.1);
+  padding: 4rem;
+  width: 100%;
+  max-width: 50rem;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+/* --- Loader --- */
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 100px);
+}
+
+/* --- Display View --- */
+.displayView {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userIcon {
+  font-size: 12rem;
+  margin-bottom: 2rem;
+  color: #1e3a5f;
+}
+
+.userName {
+  font-size: 3.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+.fullName {
+  font-size: 1.8rem;
+  color: #555;
+  margin: 0.5rem 0 1rem;
+}
+
+.email {
+  font-size: 1.6rem;
+  color: #777;
+  margin-bottom: 3rem;
+}
+
+.profileActions {
+  display: flex;
+  gap: 1.5rem;
+}
+
+/* --- Edit Form --- */
+.editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.inputGroup {
+  text-align: left;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 0.8rem;
+  font-size: 1.6rem;
+  transition: border-color 0.2s;
+}
+
+.inputGroup input:focus {
+  outline: none;
+  border-color: var(--primary, #1e3a5f);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* --- Buttons --- */
+.editButton,
+.deleteButton,
+.saveButton,
+.cancelButton,
+.confirmDeleteButton {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.editButton {
+  background-color: #007bff;
+  color: white;
+}
+
+.deleteButton {
+  background-color: #f44336;
+  color: white;
+}
+
+.saveButton {
+  background-color: #28a745;
+  color: white;
+}
+
+.cancelButton {
+  background-color: #6c757d;
+  color: white;
+}
+
+.confirmDeleteButton {
+  background-color: #dc3545;
+  color: white;
+}
+
+.editButton:hover,
+.deleteButton:hover,
+.saveButton:hover,
+.cancelButton:hover,
+.confirmDeleteButton:hover {
+  opacity: 0.9;
+}
+
+.saveButton:disabled,
+.confirmDeleteButton:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+/* --- Delete Confirmation Modal --- */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  padding: 3rem;
+  border-radius: 1.2rem;
+  width: 90%;
+  max-width: 45rem;
+  text-align: center;
+}
+
+.modalContent h3 {
+  margin-top: 0;
+  color: #dc3545;
+}
+
+.confirmInput {
+  width: 100%;
+  padding: 1rem;
+  margin: 2rem 0;
+  border: 1px solid #ccc;
+  border-radius: 0.8rem;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}

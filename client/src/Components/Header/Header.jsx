@@ -6,6 +6,7 @@ import logo from "../../assets/imgs/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context";
 import { toast } from "react-toastify";
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const [mobile, setMobile] = useState(false);
@@ -44,9 +45,21 @@ const Header = () => {
             <Link to="#">How it works</Link>
 
             {userData?.userid ? (
-              <button onClick={logout} className={styles.sign_in_btn}>
-                LOGOUT
-              </button>
+              <div className={styles.user_actions}>
+                <Link
+                  to={`/profile/${userData.userid}`}
+                  className={styles.profile_link}
+                >
+                  <div className={styles.profile_icon}>
+                    {" "}
+                    {/* Wrapper div for styling */}
+                    <FaUserCircle size={60} />
+                  </div>
+                </Link>
+                <button onClick={logout} className={styles.sign_in_btn}>
+                  LOGOUT
+                </button>
+              </div>
             ) : (
               <Link to="/landing">
                 <button className={styles.sign_in_btn}>SIGN IN</button>

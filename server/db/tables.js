@@ -11,7 +11,7 @@ const create_registration = `
 const create_profile = `
     CREATE TABLE IF NOT EXISTS profile (
       user_profile_id SERIAL PRIMARY KEY,
-      user_id INT NOT NULL,
+      user_id INT NOT NULL UNIQUE,
       first_name VARCHAR(50) NOT NULL,
       last_name VARCHAR(50) NOT NULL,
       FOREIGN KEY (user_id) REFERENCES registration(user_id) ON DELETE CASCADE

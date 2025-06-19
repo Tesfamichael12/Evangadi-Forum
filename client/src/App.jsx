@@ -9,6 +9,7 @@ import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import ChatBot from "./Components/ChatBot";
+import Profile from "./Pages/Profile";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Landing />} />
         <Route path="/sign-up" element={<Landing />} />
+        <Route path="/profile/:user_id" element={<Profile />} />
       </Routes>
       <ToastContainer
         position="top-right"
@@ -44,5 +46,3 @@ function App() {
 }
 
 export default App;
-
-

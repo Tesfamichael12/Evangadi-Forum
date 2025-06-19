@@ -10,6 +10,7 @@ async function alterAllTables(req, res) {
     "ALTER TABLE question ALTER COLUMN created_at TYPE TIMESTAMP WITH TIME ZONE;",
     "ALTER TABLE answer ALTER COLUMN created_at TYPE TIMESTAMP WITH TIME ZONE;",
     "ALTER TABLE likes_dislikes ALTER COLUMN created_at TYPE TIMESTAMP WITH TIME ZONE;",
+    "ALTER TABLE profile ADD CONSTRAINT unique_user_id UNIQUE (user_id);",
   ];
 
   const results = [];
