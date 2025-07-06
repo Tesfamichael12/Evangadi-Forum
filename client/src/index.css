@@ -36,6 +36,4 @@ body {
   font-size: 16px;
   color: var(--text-dark);
   overflow-x: hidden;
-  /* max-width: 100%; */
-  overflow-x: hidden;
 }
