@@ -356,7 +356,7 @@
   .search_input {
     min-width: 120px;
     max-width: 100%;
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 }
 /* For phones (max-width 576px) */
@@ -410,6 +410,9 @@
     width: 100%;
     min-width: 80px;
     max-width: 100%;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+  }
+  .search_icon {
+    font-size: 1rem;
   }
 }
