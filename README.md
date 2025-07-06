@@ -127,17 +127,7 @@ This project is licensed under the MIT License.
 
 ## 👥 Contributors
 
-| FName        | LName        |
-| ------------ | ------------ |
-| Eden         | Teklezghi    |
-| Abdulhakim   | Sefa         |
-| EKRAM        | ABDU         |
-| Eyale        | Kerie        |
-| Fozia        | Hussein      |
-| Ketemaw      | Asmare       |
-| Mihret       | Bizuayehu    |
-| Seid         | Mohammed     |
-| SIMON        | GHEBREMEDHIN |
-| Tesfamichael | Tafere       |
-| Tewodros     | Gebretsadkan |
-| Yilak        | Muluneh      |
+|                   [<img src="https://github.com/Yo-eden.png" width="60" style="border-radius:50%;box-shadow:0 2px 8px #0002;" alt="Yo-eden"/><br/>Yo-eden](https://github.com/Yo-eden)                   |             [<img src="https://github.com/HakimcHuu.png" width="60" style="border-radius:50%;box-shadow:0 2px 8px #0002;" alt="HakimcHuu"/><br/>HakimcHuu](https://github.com/HakimcHuu)              |        [<img src="https://github.com/ekram-web.png" width="60" style="border-radius:50%;box-shadow:0 2px 8px #0002;" alt="ekram-web"/><br/>ekram-web](https://github.com/ekram-web)         |         [<img src="https://github.com/eyale-me.png" width="60" style="border-radius:50%;box-shadow:0 2px 8px #0002;" alt="eyale-me"/><br/>eyale-me](https://github.com/eyale-me)          |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://github.com/FoziaHusseinEthio.png" width="60" style="border-radius:50%;box-shadow:0 2px 8px #0002;" alt="FoziaHusseinEthio"/><br/>Fozia Hussein](https://github.com/FoziaHusseinEthio) |      [<img src="https://github.com/KETEMAASIRES.png" width="60" style="border-radius:50%;box-shadow:0 2px 8px #0002;" alt="KETEMAASIRES"/><br/>Ketemaw Asmare](https://github.com/KETEMAASIRES)       |        [<img src="https://github.com/mihret7.png" width="60" style="border-radius:50%;box-shadow:0 2px 8px #0002;" alt="mihret7"/><br/>Mihret Bizuayehu](https://github.com/mihret7)        | [<img src="https://github.com/Seid-Mohamme.png" width="60" style="border-radius:50%;box-shadow:0 2px 8px #0002;" alt="Seid-Mohamme"/><br/>Seid Mohammed](https://github.com/Seid-Mohamme) |
+|      [<img src="https://github.com/simo2313-tec.png" width="60" style="border-radius:50%;box-shadow:0 2px 8px #0002;" alt="simo2313-tec"/><br/>SIMON GHEBREMEDHIN](https://github.com/simo2313-tec)      | [<img src="https://github.com/Tesfamichael12.png" width="60" style="border-radius:50%;box-shadow:0 2px 8px #0002;" alt="Tesfamichael12"/><br/>Tesfamichael Tafere](https://github.com/Tesfamichael12) | [<img src="https://github.com/teddy-ctrl.png" width="60" style="border-radius:50%;box-shadow:0 2px 8px #0002;" alt="teddy-ctrl"/><br/>Tewodros Gebretsadkan](https://github.com/teddy-ctrl) |       [<img src="https://github.com/ymuluneh.png" width="60" style="border-radius:50%;box-shadow:0 2px 8px #0002;" alt="ymuluneh"/><br/>Yilak Muluneh](https://github.com/ymuluneh)       |
