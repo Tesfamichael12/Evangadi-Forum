@@ -105,7 +105,10 @@ const ChatBot = () => {
           <div className={styles.header}>
             <div className={styles.titleContainer}>
               <span className={styles.mainTitle}>
-                <LuBotMessageSquare style={{ marginRight: "0.8rem" }} />{" "}
+                <LuBotMessageSquare
+                  size="25"
+                  style={{ marginRight: "0.8rem" }}
+                />{" "}
                 Evangadi Forum Assistant
               </span>
               <span className={styles.subTitle}>powered by Gemini</span>
