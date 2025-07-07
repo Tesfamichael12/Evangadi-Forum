@@ -33,12 +33,6 @@
 .Askbtn:hover {
   filter: brightness(0.9);
 }
-.username {
-  font-size: 1.6;
-}
-.username_span {
-  font-weight: 700;
-}
 .questions_list {
   padding-top: 4%;
   padding-bottom: 1%;
@@ -305,20 +299,21 @@
     justify-content: space-between;
   }
 
-  .username {
-    font-size: 1.5rem;
-  }
-
   .Askbtn {
     padding: 8px 20px;
     font-size: 1.4rem;
   }
 
   .user_container .usericon {
-    font-size: 2.5rem;
+    font-size: 5rem;
   }
   .Qtitle {
-    font-size: 2rem;
+    font-size: 2.2rem;
+    word-break: break-word;
+    line-height: 1.2;
+  }
+  .chevron {
+    font-size: 1.4rem;
   }
   .sort_container {
     justify-content: flex-start;
@@ -361,20 +356,32 @@
 }
 /* For phones (max-width 576px) */
 @media (max-width: 576px) {
-  .title {
-    font-size: 1.4rem;
+  .main_container {
+    padding: 0 2rem;
   }
-
-  .username {
-    font-size: 1.4rem;
+  .inner_center {
+    width: 60px;
+    margin-right: 5px;
+    gap: 15px;
+  }
+  .title {
+    font-size: 1.2rem;
   }
 
   .Askbtn {
     padding: 5px 15px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+  }
+  .user_container .usericon {
+    font-size: 2.5rem;
   }
   .Qtitle {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    word-break: break-word;
+    line-height: 1.2;
+  }
+  .chevron {
+    font-size: 1rem;
   }
   .sort_container {
     gap: 0.3rem;
@@ -410,7 +417,7 @@
     width: 100%;
     min-width: 80px;
     max-width: 100%;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
   .search_icon {
     font-size: 1rem;

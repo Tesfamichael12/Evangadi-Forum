@@ -214,14 +214,31 @@ function Home() {
                         <div className={styles.usericon_and_username}>
                           <div className={styles.inner_center}>
                             <FaUserCircle
-                              size={80}
+                              size={60}
                               className={styles.usericon}
                             />
-                            <div style={{ textAlign: "center" }}>
-                              <span>{"@" + q.user_name}</span>
+                            <div>
+                              <span
+                                style={{
+                                  color: "#555",
+                                  display: "block",
+                                  fontWeight: 600,
+                                  wordBreak: "break-word",
+                                  lineHeight: 1.1,
+                                  fontSize:
+                                    window.innerWidth <= 576
+                                      ? "1.2rem"
+                                      : window.innerWidth <= 768
+                                      ? "1.4rem"
+                                      : "1.6rem",
+                                }}
+                              >
+                                {"@" + q.user_name}
+                              </span>
                               {q.user_id === userData?.userid && (
                                 <div
-                                  style={{ fontSize: "0.9em", color: "#555" }}
+                                  style={{ fontSize: "1em", color: "#555" }}
+                                  className="user_name"
                                 >
                                   (You)
                                 </div>
