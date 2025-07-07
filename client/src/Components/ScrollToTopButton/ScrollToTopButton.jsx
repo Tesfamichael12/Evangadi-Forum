@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaArrowUp } from "react-icons/fa";
+import { FaChevronUp } from "react-icons/fa";
 import styles from "./ScrollToTopButton.module.css";
 
 const ScrollToTopButton = () => {
@@ -34,7 +34,7 @@ const ScrollToTopButton = () => {
     <div className={styles.scrollToTop}>
       {isVisible && (
         <button onClick={scrollToTop} className={styles.button}>
-          <FaArrowUp />
+          <FaChevronUp />
         </button>
       )}
     </div>
