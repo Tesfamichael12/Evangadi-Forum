@@ -20,6 +20,14 @@
 .comment_username {
   font-weight: 600;
   color: var(--text-dark);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  word-break: break-word;
+}
+
+@media (max-width: 600px) {
+  .comment_username {
+    font-size: 1rem;
+  }
 }
 
 .comment_timestamp {

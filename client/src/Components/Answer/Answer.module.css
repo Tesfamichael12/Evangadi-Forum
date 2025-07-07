@@ -32,6 +32,14 @@
 .username {
   font-weight: 600;
   color: var(--text-dark);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  word-break: break-word;
+}
+
+@media (max-width: 600px) {
+  .username {
+    font-size: 1rem;
+  }
 }
 
 .timestamp {
