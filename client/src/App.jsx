@@ -20,6 +20,7 @@ const ResetPassword = React.lazy(() =>
   import("./Pages/forgotpassword/ResetPassword")
 );
 const Profile = React.lazy(() => import("./Pages/Profile"));
+const HowItWorks = React.lazy(() => import("./Pages/HowItWorks/HowItWorks"));
 
 function App() {
   const { pathname } = useLocation();
@@ -51,6 +52,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/landing" element={<Landing />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
           <Route
             path="/ask-questions"
             element={

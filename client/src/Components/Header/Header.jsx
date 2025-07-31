@@ -42,7 +42,7 @@ const Header = () => {
             }`}
           >
             <Link to="/home">Home</Link>
-            <Link to="#">How it works</Link>
+            <Link to="/how-it-works">How it works</Link>
 
             {userData?.token ? (
               <div className={styles.user_actions}>
