@@ -25,6 +25,7 @@ function Home() {
   });
   const [sort, setSort] = useState("recent");
   const [search, setSearch] = useState("");
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const navigate = useNavigate();
   const token = userData?.token;
 
@@ -40,6 +41,23 @@ function Home() {
 
   useEffect(() => {
     setLoading(true);
+
+    let connectionToastId = null;
+    if (isInitialLoad) {
+      connectionToastId = toast.info(
+        "Connecting to the server... Render server might be spinning up from inactivity, which could take up to 50 seconds, only for the initial request. Thank you for your patience.",
+        {
+          position: "top-center",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
+      setIsInitialLoad(false);
+    }
+
     // Fetch questions from the API
     axios
       .get(
@@ -48,6 +66,11 @@ function Home() {
         )}`
       )
       .then((res) => {
+        // Dismiss connection toast on successful load
+        if (connectionToastId) {
+          toast.dismiss(connectionToastId);
+        }
+
         if (Array.isArray(res.data.questions)) {
           setQuestions(res.data.questions);
           setPagination(
@@ -64,6 +87,11 @@ function Home() {
         }
       })
       .catch((err) => {
+        // Dismiss connection toast on error
+        if (connectionToastId) {
+          toast.dismiss(connectionToastId);
+        }
+
         setQuestions([]);
         setPagination({ total: 0, page: 1, pageSize: 5, totalPages: 1 });
         toast.error("Failed to load questions. Please try again.", {
