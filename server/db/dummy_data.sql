@@ -128,12 +128,7 @@ INSERT INTO answer (answer, user_id, question_id) VALUES
 ('Use feature branches, write descriptive commit messages (e.g., "feat: add user login"), and rebase or merge carefully.', 28, 27),
 ('PWAs offer native-app-like experiences (offline support, push notifications) in the browser. Use service workers and a manifest file.', 29, 28),
 ('AWS, Azure, and GCP offer compute, storage, database, and ML services. Choose based on project needs and existing ecosystem.', 30, 29),
-('Practice coding problems on LeetCode/HackerRank, review system design concepts, and prepare stories for behavioral questions.', 1, 30),
-('GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. It gives clients the power to ask for exactly what they need and nothing more, makes it easier to evolve APIs over time, and enables powerful developer tools.', 22, 20),
-('Big O notation is crucial for understanding how an algorithm''s performance scales with the size of the input data. For example, an algorithm with O(n^2) complexity will become very slow as the input size (n) grows, while an O(log n) algorithm will remain efficient.', 27, 25),
-('Another key principle is writing meaningful names for variables and functions. A name should reveal its intent. For example, instead of `let d;`, use `let daysSinceModification;`. This makes the code self-documenting.', 28, 26),
-('A good branching strategy is essential. A common one is GitFlow, where you have a `main` branch for production releases, a `develop` branch for ongoing development, and feature branches for new work (e.g., `feature/user-authentication`). This keeps the repository organized and prevents direct commits to the main branch.', 29, 27),
-('For very large enterprise applications, combining a state management library like Redux with selectors from a library like Reselect can be very powerful. Selectors help you compute derived data from the state and memoize the results, preventing unnecessary re-renders and improving performance.', 15, 13);
+('Practice coding problems on LeetCode/HackerRank, review system design concepts, and prepare stories for behavioral questions.', 1, 30);
 
 -- =================================================================
 -- ENHANCED DUMMY DATA: NESTED CONVERSATIONS AND VOTES
