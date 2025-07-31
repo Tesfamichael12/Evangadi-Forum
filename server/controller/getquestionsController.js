@@ -22,26 +22,32 @@ async function getquestions(req, res) {
     // Search
     const search = req.query.search ? req.query.search.trim() : null;
     let whereClause = "";
-    let params = [userId || 0];
-    let paramIdx = 2;
+    let searchParams = [];
     if (search) {
-      whereClause = `WHERE (q.tag ILIKE $${paramIdx} OR q.question_title ILIKE $${
-        paramIdx + 1
-      } OR q.question_description ILIKE $${paramIdx + 2})`;
+      whereClause = `WHERE (q.tag ILIKE $1 OR q.question_title ILIKE $2 OR q.question_description ILIKE $3)`;
       const likeSearch = `%${search}%`;
-      params.push(likeSearch, likeSearch, likeSearch);
-      paramIdx += 3;
+      searchParams = [likeSearch, likeSearch, likeSearch];
     }
     // Get total count for pagination
     const countQuery = `SELECT COUNT(*) as total FROM question q ${whereClause}`;
-    const countParams = params.slice(1);
     const { rows: countRows } = await dbconnection.query(
       countQuery,
-      countParams
+      searchParams
     );
     const total = parseInt(countRows[0]?.total || 0, 10);
-    // Fetch paginated questions
-    params.push(pageSize, offset);
+    // Build main query parameters
+    const mainParams = [userId || 0];
+    if (search) {
+      const likeSearch = `%${search}%`;
+      mainParams.push(likeSearch, likeSearch, likeSearch);
+    }
+    mainParams.push(pageSize, offset);
+    // Build WHERE clause for main query
+    let mainWhereClause = "";
+    if (search) {
+      mainWhereClause = `WHERE (q.tag ILIKE $2 OR q.question_title ILIKE $3 OR q.question_description ILIKE $4)`;
+    }
+
     const questionsQuery = `
       SELECT
         q.*,
@@ -69,14 +75,14 @@ async function getquestions(req, res) {
           question_id
       ) AS ld ON q.question_id = ld.question_id
       LEFT JOIN likes_dislikes ul ON ul.question_id = q.question_id AND ul.user_id = $1
-      ${whereClause}
+      ${mainWhereClause}
       ORDER BY
         ${orderBy}
-      LIMIT $${params.length - 1} OFFSET $${params.length};
+      LIMIT $${mainParams.length - 1} OFFSET $${mainParams.length};
     `;
     const { rows: questions } = await dbconnection.query(
       questionsQuery,
-      params
+      mainParams
     );
     res.status(StatusCodes.OK).json({
       questions,
