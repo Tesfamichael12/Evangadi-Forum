@@ -77,25 +77,25 @@ INSERT INTO question (question_uuid, question_title, question_description, tag, 
 ('901e2345-e89b-12d3-a456-426614174008', 'How to use Axios for API calls in React?', 'I want to fetch data from an API in my React app. How do I use Axios?', 'react', 9),
 ('012e3456-e89b-12d3-a456-426614174009', 'What is JWT and how does it work?', 'I hear about JWT for authentication. How does it work and how do I use it in my project?', 'security', 10),
 ('123e4567-e89b-12d3-a456-426614174010', 'How to use Docker for local development?', 'I want to use Docker to set up my local dev environment. What are the steps?', 'devops', 11),
-('234e5678-e89b-12d3-a456-426614174011', 'Best practices for REST API design?', 'What are some key principles for designing robust and scalable RESTful APIs?', 'api', 12),
+('234e5678-e89b-12d3-a456-426614174011', 'What are the best practices for REST API design?', 'What are some key principles for designing robust and scalable RESTful APIs?', 'api', 12),
 ('345e6789-e89b-12d3-a456-426614174012', 'How to handle state management in large React applications?', 'What are popular solutions like Redux or Zustand for managing complex state?', 'react', 13),
-('456e7890-e89b-12d3-a456-426614174013', 'Understanding async/await in JavaScript.', 'Could someone explain how async/await simplifies asynchronous programming in JS?', 'javascript', 14),
+('456e7890-e89b-12d3-a456-426614174013', 'How does async/await simplify asynchronous programming in JavaScript?', 'Could someone explain how async/await simplifies asynchronous programming in JS?', 'javascript', 14),
 ('567e8901-e89b-12d3-a456-426614174014', 'What are microservices and when to use them?', 'Explain the concept of microservices architecture and its pros and cons.', 'architecture', 15),
 ('678e9012-e89b-12d3-a456-426614174015', 'How to implement OAuth 2.0 for authentication?', 'What are the main flows in OAuth 2.0 and how to secure them?', 'security', 16),
-('789e0123-e89b-12d3-a456-426614174016', 'Getting started with Python for data science.', 'What are essential Python libraries (Pandas, NumPy, Scikit-learn) for a beginner in data science?', 'python', 17),
+('789e0123-e89b-12d3-a456-426614174016', 'What are the essential Python libraries for a beginner in data science?', 'Getting started with Python for data science.', 'python', 17),
 ('890e1234-e89b-12d3-a456-426614174017', 'How to optimize SQL queries for performance?', 'Share tips on indexing, query rewriting, and execution plan analysis for faster SQL queries.', 'database', 18),
-('901e2345-e89b-12d3-a456-426614174018', 'What is server-side rendering (SSR) vs client-side rendering (CSR)?', 'Explain the differences, advantages, and disadvantages of SSR and CSR.', 'webdev', 19),
-('012e3456-e89b-12d3-a456-426614174019', 'Introduction to GraphQL.', 'What is GraphQL and how does it compare to REST APIs?', 'api', 20),
+('901e2345-e89b-12d3-a456-426614174018', 'What are the differences between Server-Side Rendering (SSR) and Client-Side Rendering (CSR)?', 'Explain the differences, advantages, and disadvantages of SSR and CSR.', 'webdev', 19),
+('012e3456-e89b-12d3-a456-426614174019', 'What is GraphQL and how does it compare to REST APIs?', 'Introduction to GraphQL.', 'api', 20),
 ('123e4567-e89b-12d3-a456-426614174020', 'How to set up a CI/CD pipeline with GitHub Actions?', 'Guide on automating build, test, and deployment using GitHub Actions.', 'devops', 21),
 ('234e5678-e89b-12d3-a456-426614174021', 'What are common web security vulnerabilities?', 'Discuss XSS, CSRF, SQL Injection, and how to prevent them.', 'security', 22),
 ('345e6789-e89b-12d3-a456-426614174022', 'Learning resources for machine learning in Amharic?', 'Are there any ML courses or tutorials available in Amharic?', 'machine-learning', 23),
 ('456e7890-e89b-12d3-a456-426614174023', 'How to contribute to open source projects?', 'A beginner''s guide to finding projects, making contributions, and submitting pull requests.', 'community', 24),
-('567e8901-e89b-12d3-a456-426614174024', 'Understanding Big O notation for algorithm analysis.', 'Explain how Big O notation is used to describe algorithm efficiency with examples.', 'algorithms', 25),
-('678e9012-e89b-12d3-a456-426614174025', 'Best practices for writing clean and maintainable code?', 'What principles like DRY, KISS, SOLID should developers follow?', 'best-practices', 26),
-('789e0123-e89b-12d3-a456-426614174026', 'How to use Git for version control effectively?', 'Tips on branching strategies, commit messages, and resolving merge conflicts.', 'git', 27),
+('567e8901-e89b-12d3-a456-426614174024', 'How is Big O notation used for algorithm analysis?', 'Explain how Big O notation is used to describe algorithm efficiency with examples.', 'algorithms', 25),
+('678e9012-e89b-12d3-a456-426614174025', 'What are the best practices for writing clean and maintainable code?', 'What principles like DRY, KISS, SOLID should developers follow?', 'best-practices', 26),
+('789e0123-e89b-12d3-a456-426614174026', 'How can I use Git for version control effectively?', 'Tips on branching strategies, commit messages, and resolving merge conflicts.', 'git', 27),
 ('890e1234-e89b-12d3-a456-426614174027', 'What are Progressive Web Apps (PWAs)?', 'Explain the features and benefits of PWAs and how to build them.', 'webdev', 28),
-('901e2345-e89b-12d3-a456-426614174028', 'Introduction to cloud computing platforms (AWS, Azure, GCP).', 'Overview of services offered by major cloud providers and their use cases.', 'cloud', 29),
-('012e3456-e89b-12d3-a456-426614174029', 'How to prepare for technical interviews in software engineering?', 'Advice on data structures, algorithms, system design, and behavioral questions for interviews.', 'career', 30);
+('901e2345-e89b-12d3-a456-426614174028', 'What are the major cloud computing platforms and their use cases?', 'Overview of services offered by major cloud providers and their use cases.', 'cloud', 29),
+('012e3456-e89b-12d3-a456-426614174029', 'How can I best prepare for a technical interview in software engineering?', 'Advice on data structures, algorithms, system design, and behavioral questions for interviews.', 'career', 30);
 
 -- ANSWERS (Assuming question_id refers to the auto-incremented PK of the question table, 1-30)
 INSERT INTO answer (answer, user_id, question_id) VALUES
@@ -128,5 +128,113 @@ INSERT INTO answer (answer, user_id, question_id) VALUES
 ('Use feature branches, write descriptive commit messages (e.g., "feat: add user login"), and rebase or merge carefully.', 28, 27),
 ('PWAs offer native-app-like experiences (offline support, push notifications) in the browser. Use service workers and a manifest file.', 29, 28),
 ('AWS, Azure, and GCP offer compute, storage, database, and ML services. Choose based on project needs and existing ecosystem.', 30, 29),
-('Practice coding problems on LeetCode/HackerRank, review system design concepts, and prepare stories for behavioral questions.', 1, 30);
+('Practice coding problems on LeetCode/HackerRank, review system design concepts, and prepare stories for behavioral questions.', 1, 30),
+('GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. It gives clients the power to ask for exactly what they need and nothing more, makes it easier to evolve APIs over time, and enables powerful developer tools.', 22, 20),
+('Big O notation is crucial for understanding how an algorithm''s performance scales with the size of the input data. For example, an algorithm with O(n^2) complexity will become very slow as the input size (n) grows, while an O(log n) algorithm will remain efficient.', 27, 25),
+('Another key principle is writing meaningful names for variables and functions. A name should reveal its intent. For example, instead of `let d;`, use `let daysSinceModification;`. This makes the code self-documenting.', 28, 26),
+('A good branching strategy is essential. A common one is GitFlow, where you have a `main` branch for production releases, a `develop` branch for ongoing development, and feature branches for new work (e.g., `feature/user-authentication`). This keeps the repository organized and prevents direct commits to the main branch.', 29, 27),
+('For very large enterprise applications, combining a state management library like Redux with selectors from a library like Reselect can be very powerful. Selectors help you compute derived data from the state and memoize the results, preventing unnecessary re-renders and improving performance.', 15, 13);
+
+-- =================================================================
+-- ENHANCED DUMMY DATA: NESTED CONVERSATIONS AND VOTES
+-- =================================================================
+
+-- -----------------------------------------------------------------
+-- Question 20: Introduction to GraphQL
+-- -----------------------------------------------------------------
+
+-- Upvotes for Question 20
+INSERT INTO likes_dislikes (user_id, question_id, is_like) VALUES
+(1, 20, true), (2, 20, true), (3, 20, true), (4, 20, true), (5, 20, true),
+(6, 20, true), (7, 20, true), (8, 20, true), (9, 20, true), (10, 20, true);
+
+-- Additional Answer for Question 20 (Answer ID will be 31)
+INSERT INTO answer (answer, user_id, question_id) VALUES
+('GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. It gives clients the power to ask for exactly what they need and nothing more, makes it easier to evolve APIs over time, and enables powerful developer tools.', 22, 20);
+
+-- Comments on Answer 20 (original answer)
+INSERT INTO comment (comment_text, user_id, answer_id) VALUES
+('Great summary! The point about preventing over-fetching is a huge selling point for GraphQL.', 1, 20); -- Comment ID 1
+
+-- Comments on Answer 31 (new answer)
+INSERT INTO comment (comment_text, user_id, answer_id) VALUES
+('This is a very clear definition. How does it handle data mutations?', 2, 31); -- Comment ID 2
+INSERT INTO comment (comment_text, user_id, answer_id, parent_comment_id) VALUES
+('Good question! GraphQL has mutations, which are used to create, update, or delete data. They work similarly to queries but are used for write operations.', 22, 31, 2); -- Comment ID 3, reply to 2
+
+-- -----------------------------------------------------------------
+-- Question 25: Understanding Big O notation
+-- -----------------------------------------------------------------
+
+-- Upvotes for Question 25
+INSERT INTO likes_dislikes (user_id, question_id, is_like) VALUES
+(11, 25, true), (12, 25, true), (13, 25, true), (14, 25, true), (15, 25, true);
+
+-- Additional Answer for Question 25 (Answer ID will be 32)
+INSERT INTO answer (answer, user_id, question_id) VALUES
+('Big O notation is crucial for understanding how an algorithm''s performance scales with the size of the input data. For example, an algorithm with O(n^2) complexity will become very slow as the input size (n) grows, while an O(log n) algorithm will remain efficient.', 27, 25);
+
+-- Comments on Answer 25 (original answer)
+INSERT INTO comment (comment_text, user_id, answer_id) VALUES
+('Thanks for the simple explanation. Could you give an example of an O(1) operation?', 3, 25); -- Comment ID 4
+INSERT INTO comment (comment_text, user_id, answer_id, parent_comment_id) VALUES
+('Sure! Accessing an element in an array by its index, like `myArray[3]`, is a classic example of an O(1) or constant time operation.', 26, 25, 4); -- Comment ID 5, reply to 4
+
+-- -----------------------------------------------------------------
+-- Question 26: Best practices for writing clean code
+-- -----------------------------------------------------------------
+
+-- Upvotes for Question 26
+INSERT INTO likes_dislikes (user_id, question_id, is_like) VALUES
+(16, 26, true), (17, 26, true), (18, 26, true), (19, 26, true), (20, 26, true), (21, 26, true);
+
+-- Additional Answer for Question 26 (Answer ID will be 33)
+INSERT INTO answer (answer, user_id, question_id) VALUES
+('Another key principle is writing meaningful names for variables and functions. A name should reveal its intent. For example, instead of `let d;`, use `let daysSinceModification;`. This makes the code self-documenting.', 28, 26);
+
+-- Comments on Answer 33 (new answer)
+INSERT INTO comment (comment_text, user_id, answer_id) VALUES
+('This is so important! It saves so much time for anyone else (or your future self) reading the code.', 4, 33); -- Comment ID 6
+INSERT INTO comment (comment_text, user_id, answer_id) VALUES
+('I agree. I would also add that keeping functions small and focused on a single task is vital.', 5, 33); -- Comment ID 7
+INSERT INTO comment (comment_text, user_id, answer_id, parent_comment_id) VALUES
+('Absolutely. That''s the "S" in SOLID - the Single Responsibility Principle. It makes code easier to test and maintain.', 28, 33, 7); -- Comment ID 8, reply to 7
+
+-- -----------------------------------------------------------------
+-- Question 27: How to use Git for version control
+-- -----------------------------------------------------------------
+
+-- Upvotes for Question 27
+INSERT INTO likes_dislikes (user_id, question_id, is_like) VALUES
+(22, 27, true), (23, 27, true), (24, 27, true), (25, 27, true), (26, 27, true), (1, 27, true), (2, 27, true);
+
+-- Additional Answer for Question 27 (Answer ID will be 34)
+INSERT INTO answer (answer, user_id, question_id) VALUES
+('A good branching strategy is essential. A common one is GitFlow, where you have a `main` branch for production releases, a `develop` branch for ongoing development, and feature branches for new work (e.g., `feature/user-authentication`). This keeps the repository organized and prevents direct commits to the main branch.', 29, 27);
+
+-- Comments on Answer 27 (original answer)
+INSERT INTO comment (comment_text, user_id, answer_id) VALUES
+('What''s the difference between `git merge` and `git rebase`?', 6, 27); -- Comment ID 9
+INSERT INTO comment (comment_text, user_id, answer_id, parent_comment_id) VALUES
+('`git merge` creates a new "merge commit" to join branches, preserving the history exactly as it happened. `git rebase` rewrites the commit history to create a linear sequence of commits. Rebase can make history cleaner, but be careful when using it on shared branches.', 28, 27, 9); -- Comment ID 10, reply to 9
+
+-- -----------------------------------------------------------------
+-- Question 13: How to handle state management in large React apps
+-- -----------------------------------------------------------------
+
+-- Upvotes for Question 13
+INSERT INTO likes_dislikes (user_id, question_id, is_like) VALUES
+(1, 13, true), (3, 13, true), (5, 13, true), (7, 13, true), (9, 13, true);
+
+-- Additional Answer for Question 13 (Answer ID will be 35)
+INSERT INTO answer (answer, user_id, question_id) VALUES
+('For very large enterprise applications, combining a state management library like Redux with selectors from a library like Reselect can be very powerful. Selectors help you compute derived data from the state and memoize the results, preventing unnecessary re-renders and improving performance.', 15, 13);
+
+-- Comments on Answer 13 (original answer)
+INSERT INTO comment (comment_text, user_id, answer_id) VALUES
+('Is React Context API a good alternative to Redux now?', 8, 13); -- Comment ID 11
+INSERT INTO comment (comment_text, user_id, answer_id, parent_comment_id) VALUES
+('It can be! For simple to moderately complex state that doesn''t change too frequently, Context API is great and avoids adding another library. However, for high-frequency updates or very complex state logic, Redux or Zustand often provide better performance and developer tools.', 14, 13, 11); -- Comment ID 12, reply to 11
+INSERT INTO comment (comment_text, user_id, answer_id, parent_comment_id) VALUES
+('I found Zustand to be a great middle-ground. It has a much simpler API than Redux but is more performant than Context for frequent updates.', 16, 13, 11); -- Comment ID 13, reply to 11
 
