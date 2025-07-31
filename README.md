@@ -11,10 +11,12 @@ A modern, community-driven Q&A platform built for the next generation of learner
 
 ## 🛠️ Tech Stack
 
-[![Tech Stack](https://skillicons.dev/icons?i=react,vite,html,css,js,nodejs,express,mysql,postgres,cypress,vscode,git,github,npm,vercel,render&perline=8)](https://skillicons.dev)
+[![Tech Stack](https://skillicons.dev/icons?i=react,vite,html,css,js,nodejs,express,mysql,postgres,supabase,cypress,vscode,git,github,npm,vercel&perline=8)](https://skillicons.dev)
+
+[![Render](https://img.shields.io/badge/Render-4285F4?logo=render&logoColor=white&style=for-the-badge)](https://render.com/)
 
 - **Frontend**: React, Vite, HTML5, CSS3 (CSS Modules), JavaScript (ES6+), React Router, Axios
-- **Backend**: Node.js, Express.js, MySQL, PostgreSQL(For Render DB)
+- **Backend**: Node.js, Express.js, MySQL, PostgreSQL (Render DB), Supabase (Cloud PostgreSQL hosting)
 - **Testing**: Cypress (E2E)
 - **Dev Tools & Deployment**: VS Code, Git, GitHub, npm, Vercel, Render
 
